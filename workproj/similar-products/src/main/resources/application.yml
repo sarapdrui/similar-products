@@ -1,0 +1,30 @@
+
+server:
+  port: 5000
+
+similar:
+  upstream:
+    base-url: http://localhost:3001
+  strictNotFound: false
+  concurrency: 8      # nº máximo de peticiones simultáneas a similares
+  prefetch: 32        # tamaño del buffer de flatMapSequential
+
+spring:
+  main:
+    web-application-type: reactive
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    export:
+      influx:
+        enabled: true
+        db: k6
+        uri: http://influxdb:8086
+        step: 5s
+logging:
+  level:
+    com.inditex.similarproducts.infrastructure.clients: DEBUG
